@@ -5,7 +5,7 @@ const { S3Store } = require("@tus/s3-store");
 require("dotenv").config();
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const s3Store = new S3Store({
   partSize: 2 * 1024 * 1024, // Each uploaded part will have ~8MiB,
