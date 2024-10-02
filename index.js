@@ -8,31 +8,28 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 4000;
 
-const whitelist = [
-  "https://bonako.dev:3131",
-  "http://localhost:3001",
-  "http://52.50.201.132:3131",
-  "https://52.50.201.132:3131",
-  "http://localhost:3000",
-  "http://localhost:3002",
-  "https://main.d20s2gmnut08bb.amplifyapp.com",
-  "https://main.d2o3xdqeddw0f4.amplifyapp.com",
-  "https://dev-twg.blocksdna.tech:2053",
-  "https://bsp-admin.vercel.app",
-];
-
-var corsOptions = {
+const whitelist = ["http://localhost:3000", "https://your-production-url.com"];
+const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
-      console.log("Not allowed by CORS: " + origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
+  methods: ["GET", "POST", "PATCH", "OPTIONS", "HEAD"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Tus-Resumable",
+    "Upload-Length",
+    "Upload-Metadata",
+  ],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 const s3Store = new S3Store({
   partSize: 2 * 1024 * 1024, // Each uploaded part will have ~8MiB,
