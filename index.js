@@ -14,6 +14,12 @@ app.use(
   })
 );
 
+uploadApp.use(
+  cors({
+    origin: "*",
+  })
+);
+
 const s3Store = new S3Store({
   partSize: 2 * 1024 * 1024, // Each uploaded part will have ~8MiB,
   maxConcurrentPartUploads: 10,
