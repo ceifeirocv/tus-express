@@ -8,7 +8,10 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 4000;
 
-const whitelist = ["http://localhost:3000", "https://your-production-url.com"];
+const whitelist = [
+  "http://localhost:3000",
+  "https://tus-front-next.onrender.com",
+];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
