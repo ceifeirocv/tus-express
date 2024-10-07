@@ -32,6 +32,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+  next();
+});
+
 app.options("*", cors(corsOptions));
 
 const s3Store = new S3Store({
